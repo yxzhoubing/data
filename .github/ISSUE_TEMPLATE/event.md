@@ -1,8 +1,8 @@
 ---
 name: 提交事件
 about: 提交一个新的事件
-title: '【事件】'
-labels: 'event'
+title: ''
+labels: '事件'
 assignees: ''
 
 ---
