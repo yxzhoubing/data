@@ -61,4 +61,4 @@ jobs:
 
       - name: Push Changes
         run: |
-          git push -u origin ${ISSUE_BRANCH}
+          git push -u origin ${ISSUE_BRANCH} --force
