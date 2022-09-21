@@ -69,11 +69,12 @@ def parse(text):
     return result
 
 
-def save(parsed, title):
+def save_yaml(parsed, title):
     disallowed_char = '\/:*?"<>|'
 
     date: datetime.date = parsed['date']
-    datadir = realpath(join(dirname(__file__), '..', date.strftime('%Y')))
+    year = date.strftime('%Y')
+    datadir = realpath(join(dirname(__file__), '..', 'yaml', year))
     if not os.path.exists(datadir):
         os.mkdir(datadir)
     for ch in disallowed_char:
