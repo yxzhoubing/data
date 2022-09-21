@@ -34,7 +34,7 @@ jobs:
 
       - name: Change to Issue Branch
         run: |
-          git fetch origin ${ISSUE_BRANCH} &> /dev/null
+          git fetch origin ${ISSUE_BRANCH}
           if [ $? -eq 0 ]; then
             # We have the branch, checkout and do the rebase
             git checkout -b ${ISSUE_BRANCH} origin/${ISSUE_BRANCH}
