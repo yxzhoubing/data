@@ -36,5 +36,5 @@ jobs:
           add_timestamp: false
           commit_prefix: "[ISSUE-${{ github.event.issue.number }}]"
           commit_message: "Updated from issue #${{ github.event.issue.number }}"
-          force: true
+          force: false
           target_branch: from-issue/${{ github.event.issue.number }}
