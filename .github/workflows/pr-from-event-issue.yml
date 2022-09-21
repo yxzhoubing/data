@@ -42,8 +42,7 @@ jobs:
 
       - name: Change to Issue Branch
         run: |
-          git fetch --unshallow origin ${ISSUE_BRANCH}
-          if [ $? -eq 0 ]; then
+          if git fetch --unshallow origin ${ISSUE_BRANCH}; then
             # We have the branch, checkout and do the rebase
             git checkout -b ${ISSUE_BRANCH} origin/${ISSUE_BRANCH}
             git rebase main
