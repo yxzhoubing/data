@@ -26,6 +26,8 @@ jobs:
       - name: 'Generate Data from Issue'
         run: ./issue-to-data.py ${{ github.event.issue.number }}
         working-directory: tools
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 'Push Changes'
         uses: devops-infra/action-commit-push@master
