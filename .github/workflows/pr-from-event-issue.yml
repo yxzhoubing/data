@@ -9,8 +9,8 @@ on:
         required: true
 
 env:
-  ISSUE_NUMBER: ${{ github.event.issue.number || github.event.input.issue }}
-  ISSUE_BRANCH: from-issue/${{ github.event.issue.number || github.event.input.issue }}
+  ISSUE_NUMBER: ${{ github.event.issue.number || github.event.inputs.issue }}
+  ISSUE_BRANCH: from-issue/${{ github.event.issue.number || github.event.inputs.issue }}
 
 jobs:
   create-pr:
