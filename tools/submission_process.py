@@ -1,5 +1,5 @@
+import datetime
 import os
-from datetime import date
 from inspect import isfunction
 from os.path import dirname, join, realpath
 
@@ -31,7 +31,7 @@ def parse(text):
         return {k: v for k, v in {'province': province, 'city': city}.items() if v}
 
     def parse_date(key):
-        return lambda v: {key: date.fromisoformat(pandoc.write(v).strip())}
+        return lambda v: {key: datetime.date.fromisoformat(pandoc.write(v).strip())}
 
     def parse_int(key):
         return lambda v: {key: int(pandoc.write(v).strip())}
@@ -72,10 +72,11 @@ def parse(text):
 def save(parsed, title):
     disallowed_char = '\/:*?"<>|'
 
-    datadir = realpath(join(dirname(__file__), '..', str(parsed['date'].year)))
+    date: datetime.date = parsed['date']
+    datadir = realpath(join(dirname(__file__), '..', date.strftime('%Y')))
     if not os.path.exists(datadir):
         os.mkdir(datadir)
     for ch in disallowed_char:
         title = title.replace(ch, '-')
-    with open(join(datadir, f'{title}.yml'), 'w') as f:
+    with open(join(datadir, f'{date.strftime("%m-%d")} {title}.yml'), 'w') as f:
         yaml.dump(parsed, f, allow_unicode=True, sort_keys=False)
