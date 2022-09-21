@@ -3,12 +3,18 @@
 import os
 from datetime import date
 from os.path import expanduser
-from sys import argv
+from sys import argv, stderr
 
 import yaml
 from github import Github
 
 import submission_process
+
+try:
+    issue_number = int(argv[1])
+except:
+    print('需要指定Issue！', file=stderr)
+    exit(1)
 
 if 'GITHUB_TOKEN' in os.environ:
     gh = Github(os.environ['GITHUB_TOKEN'])

@@ -1,0 +1,38 @@
+name: Create PR from Issue
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  create-pr:
+    name: Create PR
+    if: ${{ !github.event.issue.pull_request }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout Repo'
+        uses: actions/checkout@v3
+
+      - name: 'Setup Python'
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 'Install Dependencies'
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install pandoc
+          pip install -r tools/requirements.txt
+
+      - name: 'Generate Data from Issue'
+        run: ./issue-to-data.py ${{ github.event.issue.number }}
+        working-directory: tools
+
+      - name: 'Push Changes'
+        uses: devops-infra/action-commit-push@master
+        with:
+          github_token: "${{ secrets.GITHUB_TOKEN }}"
+          add_timestamp: true
+          commit_prefix: "[ISSUE-${{ github.event.issue.number }}]"
+          commit_message: "Updated from issue #${{ github.event.issue.number }}"
+          force: true
+          target_branch: from-issue/${{ github.event.issue.number }}
